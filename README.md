@@ -1,6 +1,6 @@
 # Skip Hire Platform 🚛
 
-A modern, user-centric skip hire platform built with React and TypeScript, featuring an engaging mascot-driven UX for increased user engagement. Click here to see how it is used in the live version: https://www.wewantwasteimproved.vercel.app
+A modern, user-centric skip hire platform built with React and TypeScript, featuring an engaging mascot-driven UX for increased user engagement. Click here to see how it is used in the live version: https://wewantwasteimproved.vercel.app
 
 **I went the extra mile to read multiple articles in order to take a data-driven approach to the page revamp.**
 
