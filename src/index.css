@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 8px;
+  border: 2px solid rgba(30, 41, 59, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.5) rgba(30, 41, 59, 0.5);
+}
+
+/* Hide scrollbar for mobile devices */
+@media (max-width: 640px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  * {
+    scrollbar-width: none;
+  }
+}
