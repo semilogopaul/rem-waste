@@ -12,7 +12,7 @@ const tutorialSteps = [
   {
     title: "Choose Your Skip Size",
     description: "Browse through our range of skip sizes from 4 to 40 yards.",
-    tip: "Hover over each skip to see more details!",
+    tip: "We provide the best skips!",
   },
   {
     title: "Filter Options",
