@@ -23,16 +23,11 @@ export const SkipSelector: React.FC<SkipSelectorProps> = ({
   const { isOpen, selectedSkip, openModal, closeModal } = useMobileModal();
 
   const filteredSkips = useMemo(() => filterSkips(skipsData, filter), [filter]);
-
   const handleSkipClick = (skip: Skip) => {
     onSizeSelect(skip.size);
     if (isMobile) {
       openModal(skip);
     }
-  };
-
-  const handleContinue = () => {
-    closeModal();
   };
 
   return (
@@ -146,7 +141,6 @@ export const SkipSelector: React.FC<SkipSelectorProps> = ({
             skip={selectedSkip}
             isOpen={isOpen}
             onClose={closeModal}
-            onContinue={handleContinue}
           />
         )}
       </AnimatePresence>

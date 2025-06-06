@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const tutorialSteps = [
   {
-    title: "Welcome to SkipHire!",
+    title: "Hi, I'm Trashy, Welcome to SkipHire!",
     description: "Let me guide you through our skip selection process.",
     tip: "I'm here to help you find the perfect skip for your needs.",
   },

@@ -4,7 +4,7 @@ A modern, user-centric skip hire platform built with React and TypeScript, featu
 
 **I went the extra mile to read multiple articles in order to take a data-driven approach to the page revamp.**
 
-'wewantwaste' is a catchy, memorable name, it's fun to say, almost playful. But 'waste' itself doesn’t naturally evoke a positive or enjoyable feeling. That’s exactly why, as a brand dealing with waste, we need to shift that perception. We’re not just managing waste, we’re rebranding it. By pairing a bold name with engaging design, clear messaging and a playful mascot, we can make the experience feel approachable, modern, and even fun. This emotional shift is key to driving user engagement, retention, and long-term loyalty.
+'wewantwaste' is a catchy, memorable name, it's fun to say, almost playful. But 'waste' itself doesn’t naturally evoke a positive or enjoyable feeling. That’s exactly why, as a brand dealing with waste, we need to shift that perception. We’re not just managing waste, we’re rebranding it. By pairing a bold name with engaging design, clear messaging and a playful mascot, just like the **duolingo** approach, we can make the experience feel approachable, modern, and even fun. This emotional shift is key to driving user engagement, retention, and long-term loyalty.
 
 This research gave birth to trashy, our mascot and some other key features (trashy says hi btw)
 
@@ -14,6 +14,8 @@ This research gave birth to trashy, our mascot and some other key features (tras
 
 - **Mascot-Aided Tutorial**: To ensure users understand the platform seamlessly, our mascot guides new users through interactive tutorials and contextual tips, making onboarding engaging and intuitive.  
   _Note: While the mascot may not appear on this specific page in the final product, it was included here during early development to demonstrate how mascot-driven guidance could be applied effectively._
+
+<img src="/public/skip-tutorial.png" alt="Trashy" width="300" />
 
 - **Favicon**: Added favicon for improved branding
 - **Smart Skip Selection**: Intuitive filtering system with size-based categorization
@@ -82,6 +84,8 @@ src/
 ## 🎨 UX Design Philosophy
 
 ### Mascot Integration Strategy
+
+<img src="/public/skip-checkout.png" alt="Trashy" width="300" />
 
 Our mascot-driven UX strategy is backed by extensive research and data:
 
