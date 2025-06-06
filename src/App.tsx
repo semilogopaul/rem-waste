@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { SkipSelector } from "./components/SkipSelector";
 import { motion, AnimatePresence } from "framer-motion";
 import { TutorialModal } from "./components/TutorialModal";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   MapPinIcon,
   TrashIcon,
@@ -11,14 +11,16 @@ import {
   CalendarDaysIcon,
   CreditCardIcon,
 } from "@heroicons/react/24/outline";
-
 import { SelectedSkipDetails } from "./components/SelectedSkipDetails";
-import { MobileSkipDetails } from "./components/MobileSkipDetails";
+import { skipsData } from "./constants/skip-selector";
+import { useSkipSelector } from "./hooks/useSkipSelector";
+import { useMediaQuery } from "./hooks/useMediaQuery";
 
 export function App() {
-  const [selectedSize, setSelectedSize] = useState<number>();
-  const [step] = useState<"size" | "details">("size");
+  const [step, setStep] = useState<"size" | "details">("size");
   const [showTutorial, setShowTutorial] = useState(true);
+  const { selectedSize, handleSizeSelect } = useSkipSelector({});
+  const isMobile = useMediaQuery("(max-width: 640px)");
 
   const steps = [
     { icon: MapPinIcon, title: "Postcode", active: true, completed: true },
@@ -51,69 +53,78 @@ export function App() {
     localStorage.setItem("skipHireTutorialSeen", "true");
   };
 
-  const handleSizeSelect = (size: number) => {
-    setSelectedSize(selectedSize === size ? undefined : size);
-  };
+  const handleContinue = useCallback(() => {
+    setStep("details");
+  }, []);
 
-  const handleContinue = () => {
-    // Handle continuation to next step
-    console.log("Continuing to next step...");
-  };
+  const selectedSkipData = selectedSize
+    ? skipsData.find((skip) => skip.size === selectedSize)
+    : null;
+  const handleUnselect = useCallback(() => {
+    if (selectedSize !== null) {
+      handleSizeSelect(selectedSize); // This will toggle it off since selectedSize is the current size
+    }
+  }, [selectedSize, handleSizeSelect]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
-      {showTutorial && <TutorialModal onClose={handleCloseTutorial} />}
-
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32">
-        <div className="mb-12">
-          <nav className="flex justify-between items-center gap-4 overflow-x-auto py-4 scrollbar-hide">
-            {steps.map((step, idx) => (
-              <div
-                key={step.title}
-                className={`flex items-center ${
-                  idx !== steps.length - 1 ? "flex-1" : ""
-                }`}
-              >
-                <div className="flex flex-col items-center flex-shrink-0">
-                  <div
-                    className={clsx(
-                      "w-10 h-10 rounded-full flex items-center justify-center border-2 mb-2",
-                      step.completed
-                        ? "bg-blue-600 border-blue-600 text-white"
-                        : step.active
-                        ? "border-blue-600 text-blue-600"
-                        : "border-gray-600 text-gray-600"
-                    )}
-                  >
-                    <step.icon className="w-5 h-5" />
-                  </div>
-                  <span
-                    className={clsx(
-                      "text-sm whitespace-nowrap",
-                      step.active ? "text-blue-500" : "text-gray-500"
-                    )}
-                  >
-                    {step.title}
-                  </span>
+      <div className="min-h-screen flex flex-col">
+        <header className="py-6 px-2 sm:px-6 border-b border-white/10">
+          <div className="flex items-center gap-2 mb-4">
+            {/* Removed mascot and title for a cleaner look */}
+          </div>
+          <div className="flex items-center justify-center gap-0 sm:gap-2">
+            {steps.map((s, i) => (
+              <div key={s.title} className="flex items-center">
+                <div
+                  className={clsx(
+                    "flex items-center justify-center w-10 h-10 sm:w-auto sm:h-auto sm:px-4 sm:py-2 rounded-full relative group",
+                    s.active
+                      ? s.completed
+                        ? "bg-blue-600 text-white shadow"
+                        : "bg-blue-600/20 text-blue-500"
+                      : "bg-slate-800 text-slate-500"
+                  )}
+                  tabIndex={0}
+                >
+                  <s.icon className="w-5 h-5" />
+                  {!isMobile && (
+                    <span
+                      className={clsx(
+                        "ml-2 font-medium text-base",
+                        s.active
+                          ? s.completed
+                            ? "text-white"
+                            : "text-blue-400"
+                          : "text-slate-400"
+                      )}
+                    >
+                      {s.title}
+                    </span>
+                  )}
+                  {isMobile && (
+                    <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-2 py-1 rounded bg-slate-900 text-xs text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none z-10 whitespace-nowrap shadow-lg border border-blue-500/20 transition-opacity duration-200">
+                      {s.title}
+                    </span>
+                  )}
                 </div>
-                {idx !== steps.length - 1 && (
+                {i !== steps.length - 1 && (
                   <div
                     className={clsx(
-                      "h-px flex-1 mx-2 mt--8",
-                      step.completed ? "bg-blue-600" : "bg-gray-600"
+                      "w-4 sm:w-8 h-0.5 mx-1",
+                      s.completed ? "bg-blue-600" : "bg-slate-800"
                     )}
                   />
                 )}
               </div>
             ))}
-          </nav>
-        </div>
+          </div>
+        </header>
 
-        <main>
+        <main className="flex-1 container mx-auto py-8">
           <AnimatePresence mode="wait">
             {step === "size" && (
               <motion.div
-                key="size-selector"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -129,15 +140,22 @@ export function App() {
       </div>
 
       <AnimatePresence>
-        {selectedSize && (
+        {selectedSkipData && (
           <SelectedSkipDetails
-            size={selectedSize}
-            price={278} // This should come from the selected skip data
-            days={14}
-            onUnselect={() => setSelectedSize(undefined)}
+            size={selectedSkipData.size}
+            price={
+              selectedSkipData.price_before_vat *
+              (1 + selectedSkipData.vat / 100)
+            }
+            days={selectedSkipData.hire_period_days}
+            onUnselect={handleUnselect}
             onContinue={handleContinue}
           />
         )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showTutorial && <TutorialModal onClose={handleCloseTutorial} />}
       </AnimatePresence>
     </div>
   );

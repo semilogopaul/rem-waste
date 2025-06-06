@@ -1,21 +1,21 @@
 import { useState, useCallback } from "react";
+import { MOBILE_BREAKPOINT } from "../constants/skip-selector";
 
 export interface UseSkipSelectorProps {
-  onSizeSelect?: (size: number | undefined) => void;
+  onSizeSelect?: (size: number | null) => void;
 }
 
 export const useSkipSelector = ({
   onSizeSelect,
 }: UseSkipSelectorProps = {}) => {
-  const [selectedSize, setSelectedSize] = useState<number>();
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [showMobileModal, setShowMobileModal] = useState(false);
 
   const handleSizeSelect = useCallback(
     (size: number) => {
-      const newSize = selectedSize === size ? undefined : size;
+      const newSize = selectedSize === size ? null : size;
       setSelectedSize(newSize);
-      if (newSize && window.innerWidth < 640) {
-        // sm breakpoint
+      if (newSize && window.innerWidth < MOBILE_BREAKPOINT) {
         setShowMobileModal(true);
       }
       onSizeSelect?.(newSize);

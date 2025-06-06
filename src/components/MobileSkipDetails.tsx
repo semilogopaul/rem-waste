@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import { motion } from "framer-motion";
 import { modalVariants, mascotVariants } from "../ui/animations/skipSelector";
 import type { MobileSkipDetailsProps } from "../types";
@@ -8,11 +8,26 @@ export const MobileSkipDetails = ({
   skip,
   isOpen,
   onClose,
-  onContinue,
-}: MobileSkipDetailsProps) => {
+}: Omit<MobileSkipDetailsProps, "onContinue">) => {
   if (!skip) return null;
 
   const totalPrice = skip.price_before_vat * (1 + skip.vat / 100);
+
+  // Encouraging messages (same as desktop)
+  const encouragingMessages = [
+    "Great choice! This skip is perfect for your needs! 🌟",
+    "Excellent selection! You're making great progress! 🚀",
+    "Fantastic pick! You're one step closer to your goal! 💪",
+    "Wonderful choice! You've got great taste in skips! ✨",
+    "Amazing selection! Let's keep the momentum going! 🎯",
+  ];
+  const randomMessage = useMemo(
+    () =>
+      encouragingMessages[
+        Math.floor(Math.random() * encouragingMessages.length)
+      ],
+    [skip?.id]
+  );
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -63,7 +78,7 @@ export const MobileSkipDetails = ({
                         <img
                           src="/mascot.png"
                           alt="Mascot"
-                          className="w-full h-full object-contain"
+                          className="object-contain w-full h-full mt-10"
                         />
                       </motion.div>
                     </div>
@@ -91,17 +106,13 @@ export const MobileSkipDetails = ({
                       transition={{ delay: 0.2 }}
                       className="text-sm text-blue-400 text-center"
                     >
-                      {skip.size <= 6
-                        ? "Perfect for home clearance and small renovation projects!"
-                        : skip.size <= 10
-                        ? "Ideal for medium construction work and garden clearance."
-                        : "Great choice for large construction projects!"}
+                      {randomMessage}
                     </motion.div>
 
                     <div className="flex flex-col gap-3">
                       <motion.button
                         whileTap={{ scale: 0.98 }}
-                        onClick={onContinue}
+                        onClick={() => {}}
                         className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl font-semibold hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg shadow-blue-500/25"
                       >
                         Continue to Permit Check
