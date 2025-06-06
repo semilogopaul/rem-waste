@@ -15,7 +15,7 @@ This research gave birth to trashy, our mascot and some other key features (tras
 - **Mascot-Aided Tutorial**: To ensure users understand the platform seamlessly, our mascot guides new users through interactive tutorials and contextual tips, making onboarding engaging and intuitive.  
   _Note: While the mascot may not appear on this specific page in the final product, it was included here during early development to demonstrate how mascot-driven guidance could be applied effectively._
 
-<img src="/public/skip-tutorial.png" alt="Trashy" width="300" />
+<img src="/public/skip-tutorial.png" alt="Trashy"/>
 
 - **Favicon**: Added favicon for improved branding
 - **Smart Skip Selection**: Intuitive filtering system with size-based categorization
